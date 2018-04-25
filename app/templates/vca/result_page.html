@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}结果展示{% endblock %}
+
+
+{% block page_content %}
+<!DOCTYPE html>
+	<div>
+		{% if url %}
+		<video width="320" height="240" controls="controls">
+			<source src="{{ url }}" type="video/mp4">
+		</video>
+		{% endif %}
+	</div>
+	<p>{% if para %}{{ para }}{% endif %}</p>
+	<div>
+		<p>生成文章：</p>
+		{% if article %}
+		<h1>{{ article['title'] }}</h1>
+		{% for content in article['content'] %}
+			{% if 'image' in content %}
+			<img src="{{ content['image'] }}">
+			{% else %}
+			<p>{{ content['text'] }}</p>
+			{% endif %}
+		{% endfor %}
+		{% endif %}
+	</div>
+{% endblock %}

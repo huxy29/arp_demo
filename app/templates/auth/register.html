@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}注册{% endblock %}
+
+{% block auth_content %}
+<h1>注册</h1>
+<br>
+<form action="" method="post" name="register">
+	{{ form.hidden_tag() }}
+	<p>
+		用户名<br>
+		{{ form.username(class="form-control") }}
+		{% for error in form.username.errors %}
+		<span style="color: red;">{{ error }}</span>
+		{% endfor %}
+		<br>
+
+		密码<br>
+		{{ form.password(class="form-control") }}
+		{% for error in form.password.errors %}
+		<span style="color: red;">{{ error }}</span>
+		{% endfor %}
+		<br>
+		
+		确认密码<br>
+		{{ form.password2(class="form-control") }}
+		{% for error in form.password2.errors %}
+		<span style="color: red;">{{ error }}</span>
+		{% endfor %}
+		<br>
+
+		{{ form.submit(class="btn btn-default") }}
+	</p>
+	<p>已有账号？<a href="{{ url_for('auth.login') }}">立即登录</a></p>
+</form>
+{% endblock %}
