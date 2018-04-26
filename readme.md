@@ -15,3 +15,10 @@ pip install requirements.txt
 python manage.py runserver
 ```
  
+## RESTful Api
+
+test
+```
+python api.py
+```
+
