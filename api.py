@@ -30,6 +30,7 @@ class User(db.Document):
     id = db.StringField(primary_key=True, required=True)
     username = db.StringField(unique=True, required=True)
     password_hash = db.StringField(required=True)
+    auth = db.IntegerField(required=True)
 
     def hash_password(self, password):
         self.password_hash = pwd_context.encrypt(password)
@@ -54,6 +55,9 @@ class User(db.Document):
         return user
 
 
+class Article(db.Document):
+    
+
 @auth.verify_password
 def verify_password(username_or_token, password):
     # first try to authenticate by token
@@ -67,7 +71,7 @@ def verify_password(username_or_token, password):
     return True
 
 
-@app.route('/arp/api/users', methods=['POST'])
+@app.route('/arp/api/users/add', methods=['POST'])
 def user_register():
     username = request.values.get('username')
     password = request.values.get('password')
@@ -127,7 +131,7 @@ def user_login():
 @app.route('/api/users/<int:id>')
 @auth.login_required
 def get_user(id):
-    user = User.query.get(id)
+    user = User.objects(id=id)
     if not user:
         abort(400)
     return jsonify({'username': user.username})
@@ -144,6 +148,13 @@ def get_auth_token():
 @auth.login_required
 def get_resource():
     return jsonify({'data': 'Hello, %s!' % g.user.username})
+
+
+@app.route('/arp/api/articles')
+@auth.login_required
+def get_articles():
+
+
 
 
 if __name__ == '__main__':
